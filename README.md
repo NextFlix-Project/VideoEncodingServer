@@ -21,9 +21,9 @@
 
 
 ## Build
-git clone https://github.com/NextFlix-Project/VideoEncodingServer.git
-cd VideoEncodingServer
-mkdir build
-cd build
-cmake ../
-make
+git clone https://github.com/NextFlix-Project/VideoEncodingServer.git <br>
+cd VideoEncodingServer <br>
+mkdir build <br>
+cd build <br>
+cmake ../ <br>
+make <br>
