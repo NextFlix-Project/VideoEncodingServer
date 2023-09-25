@@ -14,7 +14,7 @@ Models::Models()
         {
             std::cout << "Connected to the database successfully." << std::endl;
             pqxx::work txn(conn);
-            pqxx::result result = txn.exec("SELECT * FROM \"Animal\"");
+            pqxx::result result = txn.exec("SELECT * FROM \"Table\"");
 
             for (const auto &row : result)
             {

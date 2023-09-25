@@ -23,15 +23,17 @@ VideoEncodingRoutes::VideoEncodingRoutes(RestAPI *restAPI)
     this->encoder = new VideoEncoder();
 
     this->initRoutes();
+            uploadToStreamingServer("./output/150", "150"); 
+
 }
 
 VideoEncodingRoutes::~VideoEncodingRoutes()
 {
     delete this->encoder;
 }
+
 void VideoEncodingRoutes::initRoutes()
 {
-
     CROW_ROUTE(this->restAPI->getApp(), "/codecs")
     ([this]()
      { return this->encoder->getAvailableCodecs(); });
@@ -147,7 +149,7 @@ void VideoEncodingRoutes::updateManifest(std::string id)
         return;
     }
 
-    std::cout << "XML file successfully updated." << std::endl;
+    std::cout << "XML file successfully updated." << std::endl; 
 }
 
 void VideoEncodingRoutes::uploadToStreamingServer(std::string path, std::string id)
@@ -159,7 +161,7 @@ void VideoEncodingRoutes::uploadToStreamingServer(std::string path, std::string 
     if (!curl)
     {
         std::cerr << "Failed to initialize curl" << std::endl;
-        return;
+        return; 
     }
     std::string uri = "http://127.0.0.1:8888/uploadfile?id=" + id;
     const char *url = uri.c_str();
@@ -204,21 +206,7 @@ void VideoEncodingRoutes::uploadToStreamingServer(std::string path, std::string 
 
         curl_formfree(post);
 
-        bool sendFile = true;
-        while (sendFile)
-        {
-
-            if (res != CURLE_OK)
-            {
-                std::cerr << "curl_easy_perform() failed: " << curl_easy_strerror(res) << std::endl;
-                return;
-            }
-            else
-            {
-                std::cout << "File sent successfully: " << file << std::endl;
-                sendFile = false;
-            }
-        }
+ 
     }
     curl_easy_cleanup(curl);
 }

@@ -75,5 +75,6 @@
         "typeinfo": "cpp",
         "variant": "cpp",
         "semaphore": "cpp"
-    }
+    },
+    "C_Cpp.default.configurationProvider": "go2sh.cmake-integration"
 }
