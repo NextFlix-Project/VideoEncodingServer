@@ -23,8 +23,6 @@ VideoEncodingRoutes::VideoEncodingRoutes(RestAPI *restAPI)
     this->encoder = new VideoEncoder();
 
     this->initRoutes();
-            uploadToStreamingServer("./output/150", "150"); 
-
 }
 
 VideoEncodingRoutes::~VideoEncodingRoutes()
