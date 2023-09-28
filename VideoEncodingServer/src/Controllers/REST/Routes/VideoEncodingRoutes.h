@@ -22,8 +22,6 @@ namespace NextFlix
 
     private:
         void initRoutes();
-        void updateManifest(std::string id);
-        void uploadToStreamingServer(std::string path, std::string id);
-        void uploadToStreamingServer2(std::string path, std::string id);
-    };
+         void uploadToStreamingServer(std::string path, std::string id);
+     };
 }

@@ -104,8 +104,6 @@ void VideoEncodingRoutes::initRoutes()
         }
         int ret = this->encoder->encodeVideoWithCmd(inputFile, outputFile);
         
-        updateManifest(id);
-        
         uploadToStreamingServer("./output/" + id, id);
 
         if (ret == 0)
@@ -115,40 +113,7 @@ void VideoEncodingRoutes::initRoutes()
 
         res.end(); });
 }
-
-void VideoEncodingRoutes::updateManifest(std::string id)
-{
-    pugi::xml_document doc;
-
-    if (!doc.load_file(("./output/" + id + "/manifest.mpd").c_str()))
-    {
-        std::cout << "Could not load manifest file." << std::endl;
-        return;
-    }
-
-    pugi::xpath_node_set segmentTemplates = doc.select_nodes("//SegmentTemplate");
-
-    std::string uri = "http://0.0.0.0:8888/stream/segment?id=" + id + "&" + "segment=";
-    for (pugi::xpath_node segmentTemplateNode : segmentTemplates)
-    {
-        pugi::xml_node segmentTemplate = segmentTemplateNode.node();
-
-        const char *initAttrib = segmentTemplate.attribute("initialization").value();
-
-        segmentTemplate.attribute("initialization").set_value((uri + initAttrib).c_str());
-
-        const char *mediaAttrib = segmentTemplate.attribute("media").value();
-        segmentTemplate.attribute("media").set_value((uri + mediaAttrib).c_str());
-    }
-
-    if (!doc.save_file(("./output/" + id + "/manifest.mpd").c_str()))
-    {
-        std::cout << "Could not save XML file." << std::endl;
-        return;
-    }
-
-    std::cout << "XML file successfully updated." << std::endl; 
-}
+ 
 
 void VideoEncodingRoutes::uploadToStreamingServer(std::string path, std::string id)
 {
